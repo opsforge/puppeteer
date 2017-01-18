@@ -1,31 +1,12 @@
-FROM alpine:3.4
-MAINTAINER Gareth Rushgrove "gareth@puppet.com"
+FROM python:2.7-alpine
 
-ENV PUPPET_BOARD_VERSION="0.1.3" GUNICORN_VERSION="19.6.0"
+ENV PUPPETBOARD_PORT 80
+ENV PUPPETBOARD_SETTINGS docker_settings.py
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-LABEL org.label-schema.vendor="Puppet" \
-      org.label-schema.url="https://github.com/puppetlabs/puppet-in-docker" \
-      org.label-schema.name="Puppetboard" \
-      org.label-schema.license="Apache-2.0" \
-      org.label-schema.version=$PUPPET_BOARD_VERSION \
-      org.label-schema.vcs-url="https://github.com/puppetlabs/puppet-in-docker" \
-      org.label-schema.vcs-ref="791b5505348e901a21b2ca2700068e2743019848" \
-      org.label-schema.build-date="2016-09-14T13:37:00Z" \
-      org.label-schema.schema-version="1.0" \
-      com.puppet.dockerfile="/Dockerfile"
+COPY requirements-docker.txt /usr/src/app/
+RUN pip install --no-cache-dir -r requirements-docker.txt
+COPY . /usr/src/app
 
-RUN apk add --no-cache --update py-pip && \
-    rm -rf /var/cache/apk/*
-
-RUN pip install puppetboard=="$PUPPET_BOARD_VERSION" gunicorn=="$GUNICORN_VERSION"
-
-COPY wsgi.py /var/www/puppetboard/
-COPY settings.py /var/www/puppetboard/
-
-EXPOSE 8000
-
-WORKDIR /var/www/puppetboard
-
-CMD ["/usr/bin/gunicorn", "-b", "0.0.0.0:8000", "wsgi:application"]
-
-COPY Dockerfile /
+CMD gunicorn -b 0.0.0.0:${PUPPETBOARD_PORT} --access-logfile=/dev/stdout puppetboard.app:app
