@@ -1,52 +1,55 @@
-puppet:
-  restart: unless-stopped
-  container_name: puppetserver
-  hostname: puppet
-  image: opsforge/puppetserver
-  ports:
-    - 8140
-  volumes:
-    - ./code:/etc/puppetlabs/code/
-    - ./puppet/ssl:/etc/puppetlabs/puppet/ssl/
-    - ./puppet/serverdata:/opt/puppetlabs/server/data/puppetserver/
-  links:
-    - puppetdb:puppetdb
+# DOCKER COMPOSE FOR TESTING THE STACK. THIS IS DESIGNED TO BE A RANCHER CATALOG ITEM.
+version: '2'
+services:
+  puppet:
+    restart: unless-stopped
+    hostname: puppet
+    image: opsforge/puppetserver
+    ports:
+      - 8140:8140
+    volumes:
+      - ./puppet-data/code:/etc/puppetlabs/code/
+      - ./puppet-data/puppet/ssl:/etc/puppetlabs/puppet/ssl/
+      - ./puppet-data/puppet/environments:/etc/puppetlabs/puppet/environments/
+      - ./puppet-data/puppet/serverdata:/opt/puppetlabs/server/data/puppetserver/
+    networks:
+      - puppet
 
-puppetdbpostgres:
-  restart: unless-stopped
-  container_name: puppetdb-psql
-  image: opsforge/puppetdb-psql
-  environment:
-    - POSTGRES_PASSWORD=puppetdb
-    - POSTGRES_USER=puppetdb
-  expose:
-    - 5432
-  volumes:
-    - ./puppetdb-postgres/data:/var/lib/postgresql/data/
+  postgres:
+    restart: unless-stopped
+    hostname: postgres
+    image: opsforge/puppetdb-psql
+    environment:
+      - POSTGRES_PASSWORD=puppetdb
+      - POSTGRES_USER=puppetdb
+    expose:
+      - 5432
+    volumes:
+      - ./puppet-data/puppetdb-postgres/data:/var/lib/postgresql/data/
+    networks:
+      - puppet
 
-puppetdb:
-  restart: unless-stopped
-  hostname: puppetdb
-  image: opsforge/puppetdb
-  expose:
-    - 8080
-    - 8081
-  volumes:
-    - ./puppetdb/ssl:/etc/puppetlabs/puppet/ssl/
-  links:
-    - puppetdbpostgres:postgres
+  puppetdb:
+    restart: unless-stopped
+    hostname: puppetdb
+    image: opsforge/puppetdb
+    expose:
+      - 8080
+      - 8081
+    volumes:
+      - ./puppet-data/puppetdb/ssl:/etc/puppetlabs/puppet/ssl/
+    networks:
+      - puppet
 
-puppetboard:
-  restart: unless-stopped
-  image: opsforge/puppetboard
-  environment:
-    - PUPPETDB_HOST=puppetdb
-    - PUPPETDB_PORT=8081
-    - PUPPETDB_SSL_VERIFY=False
-    - INVENTORY_FACTS='Hostname,fqdn, IP Address,ipaddress'
-    - ENABLE_CATALOG=true
-    - GRAPH_FACTS='architecture,puppetversion,osfamily'
-  ports:
-    - 9080:80
-  links:
-    - puppetdb:puppetdb
+  puppetboard:
+    restart: unless-stopped
+    hostname: puppetboard
+    image: opsforge/puppetboard
+    ports:
+      - 9080:80
+    networks:
+      - puppet
+
+networks:
+  puppet:
+    driver: bridge

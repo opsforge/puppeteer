@@ -1,4 +1,4 @@
-FROM python:2.7-alpine
+FROM python:2.7-wheezy
 
 ENV PUPPETBOARD_PORT 80
 ENV PUPPETBOARD_SETTINGS docker_settings.py

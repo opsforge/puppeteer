@@ -33,7 +33,8 @@ RUN chmod 0755 /docker-entrypoint.sh && \
     puppet config set autosign true --section master && \
     puppet config set storeconfigs_backend puppetdb --section main && \
     puppet config set storeconfigs true --section main && \
-    puppet config set reports puppetdb --section main
+    puppet config set reports puppetdb --section main && \
+    puppet config set environmentpath \$confdir/environments --section main
 
 VOLUME /etc/puppetlabs/code/
 
