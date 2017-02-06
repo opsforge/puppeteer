@@ -1,4 +1,12 @@
 FROM python:2.7-wheezy
+MAINTAINER George Svachulay "george.svachulay@opsforge.io"
+
+LABEL org.label-schema.vendor="OSS" \
+      org.label-schema.name="Puppetboard" \
+      org.label-schema.license="Apache-2.0" \
+      com.puppet.dockerfile="/Dockerfile" \
+      name="puppetboard" \
+      version="0.2.0"
 
 ENV PUPPETBOARD_PORT 80
 ENV PUPPETBOARD_SETTINGS docker_settings.py
