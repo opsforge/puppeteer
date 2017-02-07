@@ -37,6 +37,10 @@ RUN chmod 0755 /docker-entrypoint.sh && \
     puppet config set environmentpath \$confdir/environments --section main
 
 VOLUME /etc/puppetlabs/code/
+VOLUME /etc/puppetlabs/code/
+VOLUME /etc/puppetlabs/puppet/ssl/
+VOLUME /etc/puppetlabs/puppet/environments/
+VOLUME /opt/puppetlabs/server/data/puppetserver/
 
 EXPOSE 8140
 
