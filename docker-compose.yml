@@ -31,7 +31,7 @@ services:
 
   puppetdb:
     restart: unless-stopped
-    hostname: puppetdb
+    hostname: puppet.db
     image: opsforge/puppetdb
     expose:
       - 8080
