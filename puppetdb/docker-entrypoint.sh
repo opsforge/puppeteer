@@ -5,9 +5,10 @@ if [ ! -d "/etc/puppetlabs/puppetdb/ssl" ]; then
     sleep 1
   done
   set -e
+  /opt/puppetlabs/bin/puppet config certname puppetdb --section main
+  /opt/puppetlabs/bin/puppet config dns_alt_names puppetdb --section main
   /opt/puppetlabs/bin/puppet agent --verbose --onetime --no-daemonize --waitforcert 120
   /opt/puppetlabs/server/bin/puppetdb ssl-setup -f
-  /opt/puppetlabs/bin/puppet agent --verbose --onetime --no-daemonize --certname puppetdb
 fi
 
 exec /opt/puppetlabs/server/bin/puppetdb "$@"
