@@ -1,0 +1,3 @@
+class { 'puppetexplorer':
+  servername => 'puppet',
+}
