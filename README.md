@@ -6,13 +6,20 @@ Image States on Hub:
  - PuppetDB: [![](https://images.microbadger.com/badges/image/opsforge/puppetdb.svg)](https://hub.docker.com/r/opsforge/puppetdb/ "PuppetDB Image")
  - PuppetDB PSQL: [![](https://images.microbadger.com/badges/image/opsforge/puppetdb-psql.svg)](https://hub.docker.com/r/opsforge/puppetdb-psql/ "PuppetDB PostgreSQL Image")
  - Puppetboard: [![](https://images.microbadger.com/badges/image/opsforge/puppetboard.svg)](https://hub.docker.com/r/opsforge/puppetboard/ "Puppetboard Image")
+ - Puppet 3.X: [![](https://images.microbadger.com/badges/image/opsforge/puppet3x.svg)](https://hub.docker.com/r/opsforge/puppet3x/ "Puppet3X Image")
 
 # Puppet Docker stack
 
 **Active versions:**
 Puppet - 4.6
 Puppet Server - 2.6
-Puppet DB - 4.2.0
+PuppetDB - 4.2.0
+
+**Legacy versions:**
+Puppet - 3.8.7
+Puppet Server - 1.2.1
+PuppetDB - 2.3.8
+Puppetexplorer - 1.5.0
 
 ## Disclaimer
 
