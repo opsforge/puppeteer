@@ -12,16 +12,16 @@ Image States on Hub:
 
 **Active versions:**
 
-Puppet - 4.6
-Puppet Server - 2.6
-PuppetDB - 4.2.0
+- Puppet - 4.6
+- Puppet Server - 2.6
+- PuppetDB - 4.2.0
 
 **Legacy versions:**
 
-Puppet - 3.8.7
-Puppet Server - 1.2.1
-PuppetDB - 2.3.8
-Puppetexplorer - 1.5.0
+- Puppet - 3.8.7
+- Puppet Server - 1.2.1
+- PuppetDB - 2.3.8
+- Puppetexplorer - 1.5.0
 
 ## Disclaimer
 
