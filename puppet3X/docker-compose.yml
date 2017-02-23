@@ -1,0 +1,35 @@
+# DOCKER COMPOSE FOR TESTING THE LEGACY STACK. THIS IS DESIGNED TO BE A RANCHER CATALOG ITEM.
+version: '2'
+services:
+  puppet:
+    restart: unless-stopped
+    hostname: puppet
+    image: opsforge/puppet3x
+    ports:
+      - 8140:8140
+      - 443:443
+      - 8080:8080
+      - 8081:8081
+    volumes:
+      - ./puppet-data/puppet/ssl:/var/lib/puppet/ssl
+      - ./puppet-data/puppet/environments:/etc/puppet/environments
+    networks:
+      - puppet
+
+  postgres:
+    restart: unless-stopped
+    hostname: postgres
+    image: opsforge/puppetdb-psql
+    environment:
+      - POSTGRES_PASSWORD=puppetdb
+      - POSTGRES_USER=puppetdb
+    expose:
+      - 5432
+    volumes:
+      - ./puppet-data/pgdata:/var/lib/postgresql/data/
+    networks:
+      - puppet
+
+networks:
+  puppet:
+    driver: bridge

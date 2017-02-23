@@ -22,4 +22,7 @@ curl --data build=true -X POST 'https://registry.hub.docker.com/u/opsforge/puppe
 
 #Puppetboard
 curl --data build=true -X POST 'https://registry.hub.docker.com/u/opsforge/puppetboard/trigger/331d463d-c42d-4dec-98a7-31c375ce869b/'
+
+#Puppet3X
+curl --data build=true -X POST 'https://registry.hub.docker.com/u/opsforge/puppet3x/trigger/1a75c281-9c06-49a1-93db-77fb4217a701/'
 echo "DockerHub build triggered..."
